@@ -55,8 +55,9 @@ async function run() {
       'jiaGuCli',
       '1.0.0'
     )
-    core.addPath(cachedJiaGuCliPath)
-    core.info(`Added ${cachedJiaGuCliPath} to PATH`)
+    const cliPath = `${cachedJiaGuCliPath}/jiagu_cli_client_linux_x64`
+    core.addPath(cliPath)
+    core.info(`Added ${cliPath} to PATH`)
     // 列出当前目录
     let myOutput = ''
     let myError = ''
@@ -77,7 +78,7 @@ async function run() {
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
 
-    await exec.exec(`${cachedJiaGuCliPath}/startup.sh`,['--config-jiagu-apk','show'],options)
+    await exec.exec('startup.sh',['--config-jiagu-apk','show'],options)
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
 
