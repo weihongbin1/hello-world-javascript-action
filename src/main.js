@@ -61,10 +61,8 @@ async function run() {
     core.addPath(cliPath)
     core.info(`Added ${cliPath} to PATH`)
 
-    // 把 qid，apiId,apiKey 写入 cliPath 的 license 文件
     const licenseFile = path.join(cliPath, 'license')
     const licenseContent = `qid=${qid}\napi_id=${apiId}\napi_key=${apiKey}`
-
     fs.writeFileSync(licenseFile, licenseContent, 'utf8')
     core.info(`License file written to ${licenseFile}`)
 
@@ -80,6 +78,23 @@ async function run() {
         myError += data.toString()
       }
     }
+    // 配置加固参数 jiaGuConfig
+    // startup.sh --config-jiagu-apk update ${jiaGuConfig} --name default --pn any
+    // 把 jiaGuConfig 按照空格分割，然后拼接成数组
+    const jiaGuConfigArray = jiaGuConfig.split(' ')
+    const jiaGuConfigArgs = [
+      '--config-jiagu-apk',
+      'update',
+      ...jiaGuConfigArray,
+      '--name',
+      'default',
+      '--pn',
+      'any'
+    ]
+    await exec.exec('startup.sh', jiaGuConfigArgs, options)
+    core.info(`myOutput: ${myOutput}`)
+    core.info(`myError: ${myError}`)
+
     await exec.exec('startup.sh', ['--config-jiagu-apk', 'show'], options)
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
