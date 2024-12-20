@@ -32562,6 +32562,10 @@ async function run() {
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
 
+    await exec.exec(`${cachedJiaGuCliPath}/startup.sh`,['--config-jiagu-apk','show'],options)
+    core.info(`myOutput: ${myOutput}`)
+    core.info(`myError: ${myError}`)
+
     // The `who-to-greet` input is defined in action metadata file
     const whoToGreet = core.getInput('apiId', { required: true })
     core.info(`Hello, ${whoToGreet}!`)
