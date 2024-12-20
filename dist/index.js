@@ -32563,7 +32563,7 @@ async function run() {
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
 
-    await exec.exec('startup.sh',['--config-jiagu-apk','show'],options)
+    await exec.exec('startup.sh', ['--config-jiagu-apk', 'show'], options)
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
 
