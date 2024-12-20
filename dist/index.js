@@ -32577,13 +32577,16 @@ async function run() {
       'any'
     ]
     await exec.exec('startup.sh', jiaGuConfigArgs, options)
-    core.info(`myOutput: ${myOutput}`)
-    core.info(`myError: ${myError}`)
+    core.info(`配置加固参数 Output: ${myOutput}`)
+    if (myError) {
+      core.setFailed(`配置加固参数 Error: ${myError}`)
+    }
 
     await exec.exec('startup.sh', ['--config-jiagu-apk', 'show'], options)
-    core.info(`myOutput: ${myOutput}`)
-    core.info(`myError: ${myError}`)
-
+    core.info(`查看加固配置 Output: : ${myOutput}`)
+    if (myError) {
+      core.setFailed(`查看加固配置 Error: ${myError}`)
+    }
     // The `who-to-greet` input is defined in action metadata file
     const whoToGreet = core.getInput('apiId', { required: true })
     core.info(`Hello, ${whoToGreet}!`)
