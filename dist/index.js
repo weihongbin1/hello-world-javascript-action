@@ -32582,10 +32582,32 @@ async function run() {
       core.setFailed(`配置加固参数 Error: ${myError}`)
     }
 
+    myError = ''
+    myOutput = ''
     await exec.exec('startup.sh', ['--config-jiagu-apk', 'show'], options)
     core.info(`查看加固配置 Output: : ${myOutput}`)
     if (myError) {
       core.setFailed(`查看加固配置 Error: ${myError}`)
+    }
+
+    // --config-sign-apk add Keystore文件路径 Keystore密码 别名 别名密码
+    myError = ''
+    myOutput = ''
+    await exec.exec(
+      'startup.sh',
+      [
+        '--config-sign-apk',
+        'add',
+        storeFilePath,
+        storePassword,
+        keyAlias,
+        keyPassword
+      ],
+      options
+    )
+    core.info(`配置签名参数 Output: ${myOutput}`)
+    if (myError) {
+      core.setFailed(`配置签名参数 Error: ${myError}`)
     }
     // The `who-to-greet` input is defined in action metadata file
     const whoToGreet = core.getInput('apiId', { required: true })
