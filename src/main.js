@@ -124,13 +124,22 @@ async function run() {
     if (myError) {
       core.setFailed(`配置签名参数 Error: ${myError}`)
     }
-    // The `who-to-greet` input is defined in action metadata file
-    const whoToGreet = core.getInput('apiId', { required: true })
-    core.info(`Hello, ${whoToGreet}!`)
 
-    // Get the current time and set as an output
-    const time = new Date().toTimeString()
-    core.setOutput('jiaGuApkFilePath', time)
+    myOutput = ''
+    myError = ''
+    await exec.exec(
+      'startup.sh',
+      ['--jiagu-apk', apkFilePath, '.', '--auto-sign'],
+      options
+    )
+    core.info(`加固 Output: ${myOutput}`)
+    if (myError) {
+      core.setFailed(`加固 Error: ${myError}`)
+    }
+    // 从当前目录下找到加固后的 apk 文件
+    const files = fs.readdirSync(process.cwd())
+    const jiaGuApkFilePath = files.find(file => path.extname(file) === '.apk')
+    core.setOutput('jiaGuApkFilePath', jiaGuApkFilePath)
 
     // Output the payload for debugging
     core.info(
