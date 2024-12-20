@@ -2,6 +2,8 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const tc = require('@actions/tool-cache')
 const exec = require('@actions/exec')
+const fs = require('fs')
+const path = require('path')
 
 /**
  * The main function for the action.
@@ -58,7 +60,14 @@ async function run() {
     const cliPath = `${cachedJiaGuCliPath}/jiagu_cli_client_linux_x64`
     core.addPath(cliPath)
     core.info(`Added ${cliPath} to PATH`)
-    // 列出当前目录
+
+    // 把 qid，apiId,apiKey 写入 cliPath 的 license 文件
+    const licenseFile = path.join(cliPath, 'license')
+    const licenseContent = `qid=${qid}\napi_id=${apiId}\napi_key=${apiKey}`
+
+    fs.writeFileSync(licenseFile, licenseContent, 'utf8')
+    core.info(`License file written to ${licenseFile}`)
+
     let myOutput = ''
     let myError = ''
 
@@ -71,13 +80,6 @@ async function run() {
         myError += data.toString()
       }
     }
-
-    // await exec.exec('node', ['index.js', 'foo=bar'], options);
-    // ls -lah cachedJiaGuCliPath
-    await exec.exec('ls', ['-lah', cachedJiaGuCliPath], options)
-    core.info(`myOutput: ${myOutput}`)
-    core.info(`myError: ${myError}`)
-
     await exec.exec('startup.sh', ['--config-jiagu-apk', 'show'], options)
     core.info(`myOutput: ${myOutput}`)
     core.info(`myError: ${myError}`)
