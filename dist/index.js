@@ -32627,9 +32627,9 @@ async function run() {
     core.setOutput('jiaGuApkFilePath', jiaGuApkFilePath)
 
     // Output the payload for debugging
-    core.info(
-      `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
-    )
+    // core.info(
+    //   `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
+    // )
   } catch (error) {
     // Fail the workflow step if an error occurs
     core.setFailed(error.message)
