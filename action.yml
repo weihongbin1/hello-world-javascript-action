@@ -1,18 +1,40 @@
-name: Hello, World!
-description: Greet someone and record the time
-author: GitHub Actions
-
-# Define your inputs here.
+name: 360 天御加固
+description: 360 天御加固
+author: weihongbin1 <1602586227@qq.com>
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
 inputs:
-  who-to-greet:
-    description: Who to greet
+  qid:
     required: true
-    default: World
-
-# Define your outputs here.
+    description: 360 qid
+  apiId:
+    required: true
+    description: 360 appID
+  apiKey:
+    required: true
+    description: 360 appKey
+  storeFilePath:
+    required: true
+    description: 签名文件路径
+  storePassword:
+    required: true
+    description: 签名文件密码
+  keyAlias:
+    required: true
+    description: 签名文件别名
+  keyPassword:
+    required: true
+    description: 签名文件别名密码
+  jiaGuConfig:
+    required: true
+    description: 加固配置 例如 --cert-check --risk-env-check --vpn-check --file-check --string-obfus --assets  --sand-hook-check --fart-check --anti-log --vmp-life-cycle --vmp-reg-class --bypass-fart --magisk-check --dynamic-feature --qdex-vmp --sim-click-check --dex2c --vip-buns --data --dex-shadow
+  apkFilePath:
+    description: apk 文件路径
+    required: true
 outputs:
-  time:
-    description: The time we greeted you
+  jiaGuApkFilePath:
+    description: 加固后的apk文件路径
 
 runs:
   using: node20
